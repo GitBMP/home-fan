@@ -1,0 +1,126 @@
+step file is for 
+
+K2-6639SP-I4SC-04
+C127507
+
+is changed and was custom made to reflect actual dimensions.
+(ai generated)
+
+
+
+
+
+
+
+```python
+#!/usr/bin/env python3
+"""
+Parametric STEP generator for HRO (Korean Hroparts) K2-6639SP-xxxx-xx
+6x6 mm SMD tactile switches, built from the dimensions on the datasheet.
+
+Part number:  K2-6639SP-[NO.1][NO.2][NO.3][NO.4]-[NO.5-6]
+  NO.1  actuator height H (mm, PCB surface to top of plunger)
+  NO.2  operating force ("vigor"), no effect on geometry
+  NO.3  contact material, no effect on geometry
+  NO.4  lead span L (tip to tip) and pad extent L1
+  NO.5-6 serial number
+
+Usage:  python3 k2_6639sp.py I4SC        -> K2-6639SP-I4SC.step
+        python3 k2_6639sp.py K4SC L4SA   -> several at once
+
+Origin: centre of the footprint, Z = 0 on the PCB surface.
+Leads exit along X (pads at x = +/-, y = +/-1.95), as in the datasheet's
+"PCB Layout" view.
+"""
+import sys
+import cadquery as cq
+
+H_CODE = {
+    "A": 4.3, "B": 4.5, "C": 5.0, "D": 5.5, "E": 6.0, "F": 6.5, "G": 7.0,
+    "H": 7.5, "I": 8.0, "J": 8.5, "K": 9.0, "L": 9.5, "M": 10.0, "N": 10.5,
+    "O": 11.0, "P": 11.5, "Q": 12.0, "R": 12.5, "S": 13.0, "T": 13.5,
+    "U": 14.0, "V": 15.0, "W": 16.0, "X": 17.0, "Y": 18.0, "Z": 19.0,
+    "1": 15.5, "2": 16.5,
+}
+# NO.4 code -> (L = lead span tip to tip, L1 = outer pad extent)
+L_CODE = {"A": (8.0, 10.0), "B": (8.5, 11.0), "C": (9.0, 11.0),
+          "D": (9.5, 12.0), "E": (10.0, 12.0)}
+
+# Fixed dimensions from the drawing (mm)
+BODY = 6.00          # square body
+BODY_H = 3.40        # PCB to top of cover
+COVER_T = 0.30       # nickel plated steel cover
+RIVET_D = 1.00       # corner heat-stake posts
+RIVET_H = 0.40       # "0.4 Max" above cover
+RIVET_POS = 1.95     # post centre offset from body centre
+PLUNGER_D = 3.40     # actuator diameter
+LEAD_W = 0.70        # terminal width
+LEAD_T = 0.30        # terminal thickness (brass 0.30t)
+LEAD_PITCH = 3.90    # terminal pitch in Y
+LEAD_EXIT_Z = 1.00   # height where the terminal leaves the body
+
+BLACK = cq.Color(0.10, 0.10, 0.10)
+NICKEL = cq.Color(0.75, 0.75, 0.78)
+SILVER = cq.Color(0.85, 0.85, 0.82)
+
+
+def build(code: str) -> cq.Assembly:
+    h = H_CODE[code[0]]
+    span, _ = L_CODE[code[3]]
+
+    base_h = BODY_H - COVER_T
+    base = (cq.Workplane("XY").box(BODY, BODY, base_h, centered=(True, True, False))
+            .edges("|Z").fillet(0.25))
+    # heat-stake posts poking through the cover
+    posts = (cq.Workplane("XY").workplane(offset=base_h)
+             .pushPoints([(x, y) for x in (-RIVET_POS, RIVET_POS)
+                          for y in (-RIVET_POS, RIVET_POS)])
+             .circle(RIVET_D / 2).extrude(COVER_T + RIVET_H))
+    base = base.union(posts)
+
+    cover = (cq.Workplane("XY").workplane(offset=base_h)
+             .rect(BODY, BODY).extrude(COVER_T)
+             .edges("|Z").fillet(0.25)
+             .faces(">Z").workplane().circle(PLUNGER_D / 2 + 0.15).cutThruAll()
+             .cut(posts))
+
+    plunger = (cq.Workplane("XY").workplane(offset=base_h)
+               .circle(PLUNGER_D / 2).extrude(h - base_h)
+               .faces(">Z").edges().chamfer(0.20))
+
+    # gull-wing terminal: horizontal exit, vertical drop, foot on the PCB
+    def lead(sx, sy):
+        tip = span / 2
+        knee = BODY / 2 + 0.55
+        prof = [(BODY / 2 - 0.5, LEAD_EXIT_Z), (knee, LEAD_EXIT_Z),
+                (knee, LEAD_T), (tip, LEAD_T), (tip, 0.0),
+                (knee - LEAD_T, 0.0), (knee - LEAD_T, LEAD_EXIT_Z - LEAD_T),
+                (BODY / 2 - 0.5, LEAD_EXIT_Z - LEAD_T)]
+        solid = (cq.Workplane("XZ").polyline(prof).close()
+                 .extrude(LEAD_W / 2, both=True))
+        if sx < 0:
+            solid = solid.mirror("YZ")
+        return solid.translate((0, sy * LEAD_PITCH / 2, 0))
+
+    leads = None
+    for sx in (1, -1):
+        for sy in (1, -1):
+            l = lead(sx, sy)
+            leads = l if leads is None else leads.union(l)
+    leads = leads.cut(base)
+
+    asm = cq.Assembly(name=f"K2-6639SP-{code}")
+    asm.add(base, name="base", color=BLACK)
+    asm.add(cover, name="cover", color=NICKEL)
+    asm.add(plunger, name="plunger", color=BLACK)
+    asm.add(leads, name="terminals", color=SILVER)
+    return asm
+
+
+if __name__ == "__main__":
+    for code in sys.argv[1:] or ["I4SC"]:
+        code = code.upper()
+        out = f"K2-6639SP-{code}.step"
+        build(code).export(out)
+        print(f"{out}: H={H_CODE[code[0]]} mm, lead span L={L_CODE[code[3]][0]} mm")
+```

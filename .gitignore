@@ -1,0 +1,35 @@
+# KiCad
+.history/
+*-backups/
+*.bak
+*.kicad_prl
+*.lck
+~*.lck
+fp-info-cache
+_autosave-*
+*.kicad_sch-bak
+*.kicad_pcb-bak
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.claude/
+
+# Syncthing
+.stfolder/
+.stversions/
+*.sync-conflict-*
+
+# Windows metadata (WSL)
+*Zone.Identifier
+
+# FreeCAD / 3D print output
+*.FCBak
+*.FCStd1
+*.stl
+*.3mf
+*.gcode
+
+# Rust build output
+target/

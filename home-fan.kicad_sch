@@ -1,0 +1,152 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "187deb43-0765-4f22-9acc-967290ea3e83")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 148.59 30.48)
+		(size 36.83 36.83)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "00337009-bc97-4a78-bf43-500f84425d1a")
+		(property "Sheetname" "ESP32-C6-2"
+			(at 148.59 29.7684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "ESP32-C6-2.kicad_sch"
+			(at 148.59 67.8946 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "home-fan"
+				(path "/187deb43-0765-4f22-9acc-967290ea3e83"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 99.06 30.48)
+		(size 35.56 36.83)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "325ff74c-d349-4bb9-9ee5-fea354ceb006")
+		(property "Sheetname" "ESP32-C6-1"
+			(at 99.06 29.7684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "ESP32-C6-1.kicad_sch"
+			(at 99.06 67.8946 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "home-fan"
+				(path "/187deb43-0765-4f22-9acc-967290ea3e83"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 52.07 30.48)
+		(size 36.83 36.83)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "c6d7d544-521b-4573-a9ec-26f514ac35d0")
+		(property "Sheetname" "Block Diagram"
+			(at 52.07 29.7684 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "BlockDiagram.kicad_sch"
+			(at 52.07 67.8946 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "home-fan"
+				(path "/187deb43-0765-4f22-9acc-967290ea3e83"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)
