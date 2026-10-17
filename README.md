@@ -47,12 +47,12 @@ The controller is designed for one or two fans. With two fans, one blows in whil
 The controller has two fan outputs and runs the two fans individually, each in its own direction. Both fans are mounted the same way.
 
 **Daisy chain**  
-If your fans are connected by a single cable, going into fan 1 and on to fan 2, use one fan output and mechanically flip one of the fans so it blows the other way. Either fan output supports that.
+If your fans are connected by a single cable, going into fan 1 and on to fan 2, use one fan output on the controller and mechanically flip a fan so it blows the other way. Either fan output supports that.
 
 ## What it does
 
 - Runs two reversing fans in push / pull: one blows out for 70 s while the other pulls in, then both switch
-- Two SHT31 temperature / humidity sensors over I2C, one in the housing and one in the second room (~5 m away, shielded / twisted cable). Meant for bathrooms: when humidity rises above roughly 80 %, the fans go to 100 % until it drops again
+- Two SHT31 temperature / humidity sensors over I2C, one in the housing and one in the second room (~5 m with shielded / twisted cable). Meant for bathrooms: when humidity rises above roughly 80 %, the fans go to 100 % until it drops again
 - DS18B20 temperature sensor to monitor internal components (PSU, PCB) in the wall. 
 - USB-C for flashing and debugging. The board also runs from USB alone, at reduced LED brightness, so you can develop on the desk without the 12 V supply
 - ESP32-C6 with Wi-Fi, Bluetooth, Zigbee and Thread. The stock firmware does not use any of it: no network, one fan in, one fan out, nothing that can crash. Home Assistant or house-wide synchronisation is possible if you want to tinker yourself.
@@ -63,7 +63,7 @@ Two ways to set the fan speed, pick one or both when printing the cover plate:
 
 - **Slide potentiometer**: continuous speed. Sticks out of the cover, optional (~3.5 eur). 
 - **Four buttons**: fixed steps, e.g. off / 20 % / 50 % / 100 %. Flat profile.
-- **10x RGB-LEDs** (WS2812B): shine-through the housing, invisible when deactivated.
+- **10x RGB-LEDs** (WS2812B): shine-through the housing, invisible when off.
 
 ### Debug display
 
@@ -166,6 +166,10 @@ The board also carries two standard 4-pin PC fan headers wired in parallel with 
 ## Safety
 
 The board itself runs on 12 V, which is harmless. The 12 V power supply connects to mains. Use a ready-made, certified PSU and have the mains side done by someone qualified if you are not.
+
+## Feedback
+
+Found a mistake or have a question: open an [issue](https://github.com/GitBMP/home-fan/issues). Built one or wrote firmware for it: post in [Discussions](https://github.com/GitBMP/home-fan/discussions), I would like to know.
 
 ## License
 
