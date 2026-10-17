@@ -5533,6 +5533,17 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "?EN?"
+		(exclude_from_sim no)
+		(at 161.036 117.094 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(color 0 0 0 1)
+			)
+		)
+		(uuid "392d1998-d5c5-46be-ad5a-cb8526b2cf3f")
+	)
 	(text "5V IN / USB-Protection"
 		(exclude_from_sim no)
 		(at 14.732 56.388 0)

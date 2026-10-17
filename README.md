@@ -43,16 +43,16 @@ The original inVENTer controller is replaced completely, nothing of it is reused
 
 The controller is designed for one or two fans. With two fans, one blows in while the other blows out, then both reverse. Depending on the cables already in your wall there are two ways to get there:
 
-**Individual cabling**
+**Individual cabling**  
 The controller has two fan outputs and runs the two fans individually, each in its own direction. Both fans are mounted the same way.
 
-**Daisy chain**
+**Daisy chain**  
 If your fans are connected by a single cable, going into fan 1 and on to fan 2, use one fan output and mechanically flip one of the fans so it blows the other way. Either fan output supports that.
 
 ## What it does
 
 - Runs two reversing fans in push / pull: one blows out for 70 s while the other pulls in, then both switch
-- Two SHT31 temperature / humidity sensors over I2C, one in the housing, one for the other room (~5m, with shielded / twisted cables)
+- Two SHT31 temperature / humidity sensors over I2C, one in the housing and one in the second room (~5 m away, shielded / twisted cable). Meant for bathrooms: when humidity rises above roughly 80 %, the fans go to 100 % until it drops again
 - DS18B20 temperature sensor to monitor internal components (PSU, PCB) in the wall. 
 - USB-C for flashing and debugging. The board also runs from USB alone, at reduced LED brightness, so you can develop on the desk without the 12 V supply
 - ESP32-C6 with Wi-Fi, Bluetooth, Zigbee and Thread. The stock firmware does not use any of it: no network, one fan in, one fan out, nothing that can crash. Home Assistant or house-wide synchronisation is possible if you want to tinker yourself.
@@ -61,7 +61,7 @@ If your fans are connected by a single cable, going into fan 1 and on to fan 2, 
 
 Two ways to set the fan speed, pick one or both when printing the cover plate:
 
-- **Slide potentiometer**: continuous speed. Sticks out of the cover, optional. 
+- **Slide potentiometer**: continuous speed. Sticks out of the cover, optional (~3.5 eur). 
 - **Four buttons**: fixed steps, e.g. off / 20 % / 50 % / 100 %. Flat profile.
 - **10x RGB-LEDs** (WS2812B): shine-through the housing, invisible when deactivated.
 
@@ -84,13 +84,13 @@ Block Diagram is outdated.
 | 3.3 V rail     | AP63203 buck converter, 2 A. 12 V and USB 5 V are diode-OR'ed into the buck, so either source works |
 | USB-C          | Flashing, debugging and desk power. USBLC6-2SC6 ESD protection. A 12 V sense line tells the firmware whether it runs on USB only |
 | Fan outputs    | 2 × 3-pin screw terminal (PWM, 12 V, GND)                                                    |
-| PC fan headers | 2 × 4-pin PC fan header in parallel with the screw terminals, with tacho input (see below)   |
+| PC fan headers | 2 × 4-pin PC fan header in parallel with the screw terminals, with tacho input (optional)   |
 | Buttons        | 4 × 6 × 6 mm tactile switches, plus reset and boot buttons                                   |
-| Slider         | Bourns PTA3043, 10 kΩ, 30 mm travel                                                          |
+| Slider         | Bourns PTA3043, 10 kΩ, 30 mm travel (optional)                                                         |
 | LEDs           | 10 × WS2812B-2020                                                                            |
 | I2C            | 3 × JST-XH 2.54 mm 4-pin: two SHT31 sensors, one debug display                               |
-| 1-Wire         | DS18B20 on board plus JST-PH 2.0 mm 3-pin for an external sensor (1-Wire supports long cables). Not populated by default |
-| Expansion      | 2 × 7 pin header J11. One row matches the pinout of the common cheap SPI displays (GND, 3V3, IO4, IO5, TXD0, RXD0, 3V3) so one can be soldered straight on. The other row breaks out 3V3, SDA, SCL, 1-Wire, WS2812B data out and both tacho lines for more LEDs, sensors or analog inputs |
+| 1-Wire         | DS18B20 on board plus JST-PH 2.0 mm 3-pin for an external sensor (1-Wire supports long cables). (optional) |
+| Expansion      | 2 × 7 pin header J11. One row matches the pinout of the common cheap SPI displays (GND, 3V3, IO4, IO5, TXD0, RXD0, 3V3) so one can be soldered straight on. The other row breaks out 3V3, SDA, SCL, 1-Wire, WS2812B data out and both tacho lines for more LEDs, sensors or analog inputs (optional) |
 | PCB            | 4 layers. SMD parts on the front, through-hole connectors on the back                       |
 
 Every connector type is used only once (2-pin and 3-pin screw terminals, 2.54 mm JST-XH, 2.0 mm JST-PH, USB-C), so nothing fits in the wrong place.
