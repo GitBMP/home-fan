@@ -169,7 +169,7 @@ The board itself runs on 12 V, which is harmless. The 12 V power supply connects
 
 ## Feedback
 
-Found a mistake or have a question: open an [issue](https://github.com/GitBMP/home-fan/issues). Built one or wrote firmware for it: post in [Discussions](https://github.com/GitBMP/home-fan/discussions), I would like to know.
+Found a mistake or have a question: open an [issue](https://github.com/GitBMP/home-fan/issues). Built one or wrote firmware for it: post in [Discussions](https://github.com/GitBMP/home-fan/discussions), I'm curious.
 
 ## License
 
